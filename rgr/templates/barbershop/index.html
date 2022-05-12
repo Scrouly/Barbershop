@@ -1,0 +1,16 @@
+{% extends "barbershop/base_generic.html" %}
+
+{% block content %}
+<h1>Barbershop Home</h1>
+
+
+<h2>Dynamic content</h2>
+
+  <p>About Us:</p>
+  <ul>
+    <li><strong>We have:</strong> {{ num_barbershops }} barbershop</li>
+    <li><strong>In:</strong> {{ num_citys }} city's</li>
+    <li><strong>We provide:</strong> {{ num_services }} services</li>
+  </ul>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "barbershop/base_generic.html" %}
+
+{% block content %}
+{% if barber_list %}
+{% for barbers in barber_list %}
+<ul>Новый барбер добавлен : {{barbers}}
+    <li>Телефон - {{barbers.phone_number}}</li>
+    <li>Стаж работы - {{barbers.work_experience}}</li>
+    <li>Дата устройства на работу - {{barbers.date_of_employment}}</li>
+    <li>Место работы - {{barbers.barbershop}}</li>
+</ul>
+{% endfor %}
+{% endif %}
+
+{% if barber %}
+{% for barbers in barber %}
+<ul>Имя барбера : <a href="{{barbers.get_url}}">{{barbers}}</a>
+    <li>Телефон - {{barbers.phone_number}}</li>
+    <li>Стаж работы - {{barbers.work_experience}}</li>
+    <li>Дата устройства на работу - {{barbers.date_of_employment}}</li>
+    <li>Место работы - {{barbers.barbershop}}</li>
+</ul>
+{% endfor %}
+{% endif %}
+{% if one_barber %}
+<table>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+              {{ message }}</li>
+        {% endfor %}
+    </ul>
+   {% endif %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <ul>Имя барбера : {{one_barber}}</a>
+        <li>Телефон - {{one_barber.phone_number}}</li>
+        <li>Стаж работы - {{one_barber.work_experience}}</li>
+        <li>Дата устройства на работу - {{one_barber.date_of_employment}}</li>
+        <li>Место работы - {{one_barber.barbershop}}</li>
+    </ul>
+    <button type="submit" name="delete">Уволить</button>
+</form>
+</table>
+{% endif %}
+{% endblock %}

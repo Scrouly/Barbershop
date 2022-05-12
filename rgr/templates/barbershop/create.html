@@ -1,0 +1,16 @@
+{% extends "barbershop/base_generic.html" %}
+
+{% block content %}
+<h5><a href="{% url 'add_barber' %}">Create a barber manually</a></h5>
+<br>
+<label for = 'count'>Choose the number of barbers to randomly create</label>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <select id="count" name="count">
+            {% for num in count %}
+            <option>{{num}}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" name="create">create</button>
+    </form>
+{% endblock %}

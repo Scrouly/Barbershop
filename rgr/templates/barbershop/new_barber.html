@@ -1,0 +1,36 @@
+{% extends "barbershop/base_generic.html" %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages" xmlns="http://www.w3.org/1999/html">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<!--Form with multiple submit buttons-->
+<form action="" method="POST">
+    {% csrf_token %}
+    <ul>
+        <li><label for="fist_name">Enter barber first name:</label></li>
+        <input type="text" id="fist_name" name="fist_name"/>
+        <li><label for="second_name">Enter barber second name:</label></li>
+        <input type="text" id="second_name" name="second_name"/>
+        <li><label for="phone_number">Enter barber phone:</label></li>
+        <input type="text" id="phone_number" name="phone_number"/>
+        <li><label for="barbershop">Enter a barbershop:</label></li>
+        <select id="barbershop" name="barbershop">
+            {% for barbershop in barbershop_list %}
+            <option>{{barbershop}}</option>
+            {% endfor %}
+        </select>
+
+        <br> <br>
+
+        <button type="submit" name="add">Add</button>
+    </ul>
+</form>
+{% endblock %}
