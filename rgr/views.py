@@ -2,7 +2,7 @@ import random as rm
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import render, get_list_or_404, redirect
 from django.views import View
 
 from .data_creation import random_data as dc
@@ -82,6 +82,36 @@ def add_barber(request):
 
     return render(request, 'barbershop/new_barber.html', context={"barbershop_list": barbershop_list})
 
+class ChangeBarberInfo(View):
+    def get(self, request,barber_id: int):
+        get_list_or_404(Employees, id=barber_id)
+        one_barber = Employees.objects.get(id=barber_id)
+        barbershop_list = Barbershop.objects.all()
+        return render(request, 'barbershop/change_barber_info.html', context={"one_barber": one_barber,
+                                                                              "barbershop_list": barbershop_list})
+
+    def post(self, request,barber_id: int):
+        if 'change' in request.POST:
+            barbershop_list = Barbershop.objects.all()
+            first_name = request.POST.get("fist_name")
+            second_name = request.POST.get("second_name")
+            phone_number = request.POST.get("phone_number")
+            barbershop = request.POST.get("barbershop")
+            print(barbershop)
+            one_barber = Employees.objects.get(id=barber_id)
+            barber = Employees.objects.filter(id=barber_id)
+            update_list =[]
+            if one_barber.first_name != first_name:
+                barber.update(first_name = first_name)
+            if one_barber.second_name != second_name:
+                barber.update(second_name = second_name)
+            if one_barber.phone_number != phone_number:
+                barber.update(phone_number = phone_number)
+            if one_barber.barbershop != barbershop:
+                barbershop = Barbershop.objects.get(name=barbershop)
+                barber.update(barbershop = barbershop)
+
+        return redirect(f"/barbers/{barber_id}")
 
 class CustomerInfo(View):
     def get(self, request):

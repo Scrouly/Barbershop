@@ -1,0 +1,25 @@
+{% extends "barbershop/base_generic.html" %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <ul>
+        <li><label for="fist_name">Enter barber first name:</label></li>
+        <input type="text" id="fist_name" name="fist_name", value={{one_barber.first_name}} />
+        <li><label for="second_name">Enter barber second name:</label></li>
+        <input type="text" id="second_name" name="second_name", value={{one_barber.second_name}} />
+        <li><label for="phone_number">Enter barber phone:</label></li>
+        <input type="text" id="phone_number" name="phone_number", value={{one_barber.phone_number}} />
+        <li><label for="barbershop">Enter a barbershop:</label></li>
+        <select id="barbershop" name="barbershop" >
+            {% for barbershop in barbershop_list %}
+            <option>{{barbershop}}</option>
+            {% endfor %}
+        </select>
+
+        <br> <br>
+
+        <button type="submit" name="change">Change</button>
+    </ul>
+</form>
+{% endblock %}

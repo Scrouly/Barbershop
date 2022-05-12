@@ -10,7 +10,8 @@ urlpatterns = [
     path('barber/', view_all_barber, name = 'barber_list'),
     path('add_barber/<int:count>/', random_barber, name = 'create_barber'),
     path('barbers/<int:barber_id>/', view_barber, name = 'barber_inf'),
-    path('add_barber/', add_barber, name = 'add_barber'),
+    path('barbers/<int:barber_id>/change/', ChangeBarberInfo.as_view(), name = 'change_inf'),
+    path('random_barber/add_barber/', add_barber, name = 'add_barber'),
     path('random_barber/', RandomBarber.as_view(), name = 'random_barber'),
 
 ]

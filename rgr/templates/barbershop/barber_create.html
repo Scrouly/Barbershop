@@ -27,21 +27,25 @@
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-              {{ message }}</li>
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+            {{ message }}
+        </li>
         {% endfor %}
     </ul>
-   {% endif %}
-<form action="" method="POST">
-    {% csrf_token %}
-    <ul>Имя барбера : {{one_barber}}</a>
-        <li>Телефон - {{one_barber.phone_number}}</li>
-        <li>Стаж работы - {{one_barber.work_experience}}</li>
-        <li>Дата устройства на работу - {{one_barber.date_of_employment}}</li>
-        <li>Место работы - {{one_barber.barbershop}}</li>
-    </ul>
-    <button type="submit" name="delete">Уволить</button>
-</form>
+    {% endif %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <ul>Имя барбера : {{one_barber}}</a>
+            <li>Телефон - {{one_barber.phone_number}}</li>
+            <li>Стаж работы - {{one_barber.work_experience}}</li>
+            <li>Дата устройства на работу - {{one_barber.date_of_employment}}</li>
+            <li>Место работы - {{one_barber.barbershop}}</li>
+        </ul>
+        <button type="submit" name="delete">Уволить</button>
+    </form>
+    <form action="change">
+        <button>Редактировать</button>
+    </form>
 </table>
 {% endif %}
 {% endblock %}
