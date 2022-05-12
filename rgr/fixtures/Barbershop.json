@@ -1,0 +1,20 @@
+[
+  {
+    "model": "rgr.barbershop",
+    "pk": 1,
+    "fields": {
+      "name": "Braza",
+      "address": "Pravdi,48",
+      "city": 1
+    }
+  },
+  {
+    "model": "rgr.barbershop",
+    "pk": 2,
+    "fields": {
+      "name": "Macheto",
+      "address": "Ludnicova,18",
+      "city": 1
+    }
+  }
+]
