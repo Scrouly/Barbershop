@@ -4,10 +4,86 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_list_or_404, redirect
 from django.views import View
+from rest_framework import viewsets
 
 from .data_creation import random_data as dc
 from .forms import CustomerForm
 from .models import *
+from .permissions import *
+from .serializers import *
+
+
+class BarberViewSet(viewsets.ModelViewSet):
+    queryset = Employees.objects.all()
+    serializer_class = EmployeesSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+    permission_classes = [IsUserOrAdmin]
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsUserOrAdmin]
+
+
+class BarbershopViewSet(viewsets.ModelViewSet):
+    queryset = Barbershop.objects.all()
+    serializer_class = BarbershopSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+
+class ServicesViewSet(viewsets.ModelViewSet):
+    queryset = Services.objects.all()
+    serializer_class = ServicesSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+
+# class BarberAPIList(generics.ListCreateAPIView):
+#     queryset = Employees.objects.all()
+#     serializer_class = EmployeesSerializer
+#     permission_classes = (IsAuthenticatedOrReadOnly,)
+#
+#
+# class BarberAPIUpdate(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Employees.objects.all()
+#     serializer_class = EmployeesSerializer
+#     permission_classes = (IsAuthenticated,)
+#
+# class BarberAPIDestroy(generics.RetrieveDestroyAPIView):
+#     queryset = Employees.objects.all()
+#     serializer_class = EmployeesSerializer
+#     permission_classes = (IsAdminOrReadOnly,)
+
+
+#
+#
+# class BarberRUD(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Employees.objects.all()
+#     serializer_class = EmployeesSerializer
+
+
+# class BarberAPIView(APIView):
+#     def get(self, request):
+#         lst = Employees.objects.all().values()
+#         print(lst)
+#         return Response({'Employees': list(lst)})
+#
+#     def post(self, request):
+#         post_new = Employees.objects.create(
+#             first_name=request.data['first_name'], second_name=request.data['second_name'],
+#             phone_number=request.data['phone_number'], barbershop_id=request.data['barbershop']
+#         )
+#         return Response({'post': model_to_dict(post_new)})
+
+
+# class BarberAPIView(generics.ListAPIView):
+#     queryset = Employees.objects.all()
+#     serializer_class = EmployeesSerializer
 
 
 @login_required
@@ -82,17 +158,18 @@ def add_barber(request):
 
     return render(request, 'barbershop/new_barber.html', context={"barbershop_list": barbershop_list})
 
+
 class ChangeBarberInfo(View):
-    def get(self, request,barber_id: int):
+    def get(self, request, barber_id: int):
         get_list_or_404(Employees, id=barber_id)
         one_barber = Employees.objects.get(id=barber_id)
         barbershop_list = Barbershop.objects.all()
         return render(request, 'barbershop/change_barber_info.html', context={"one_barber": one_barber,
                                                                               "barbershop_list": barbershop_list})
 
-    def post(self, request,barber_id: int):
+    def post(self, request, barber_id: int):
         if 'change' in request.POST:
-            barbershop_list = Barbershop.objects.all()
+
             first_name = request.POST.get("fist_name")
             second_name = request.POST.get("second_name")
             phone_number = request.POST.get("phone_number")
@@ -100,18 +177,19 @@ class ChangeBarberInfo(View):
             print(barbershop)
             one_barber = Employees.objects.get(id=barber_id)
             barber = Employees.objects.filter(id=barber_id)
-            update_list =[]
+
             if one_barber.first_name != first_name:
-                barber.update(first_name = first_name)
+                barber.update(first_name=first_name)
             if one_barber.second_name != second_name:
-                barber.update(second_name = second_name)
+                barber.update(second_name=second_name)
             if one_barber.phone_number != phone_number:
-                barber.update(phone_number = phone_number)
+                barber.update(phone_number=phone_number)
             if one_barber.barbershop != barbershop:
                 barbershop = Barbershop.objects.get(name=barbershop)
-                barber.update(barbershop = barbershop)
+                barber.update(barbershop=barbershop)
 
         return redirect(f"/barbers/{barber_id}")
+
 
 class CustomerInfo(View):
     def get(self, request):
