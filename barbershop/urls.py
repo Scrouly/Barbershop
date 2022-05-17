@@ -42,9 +42,6 @@ urlpatterns = [
     path('api/v1/', include(order_router.urls)),
     path('api/v1/', include(barbershop_router.urls)),
     path('api/v1/', include(services_router.urls)),
-    #    path('api/v1/barber/', BarberAPIList.as_view()),
-    #    path('api/v1/barber/<int:pk>/', BarberAPIUpdate.as_view()),
-    #    path('api/v1/barberdestroy/<int:pk>/', BarberAPIDestroy.as_view()),
     path('api/v1/auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 
