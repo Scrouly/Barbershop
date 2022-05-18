@@ -23,10 +23,9 @@ class BarbershopSerializer(serializers.ModelSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Customer
-        fields = ('first_name', 'second_name', 'phone_number', 'email',)
+        fields = ('id','first_name', 'second_name', 'phone_number', 'email','user',)
 
 
 class OrderSerializer(serializers.ModelSerializer):
